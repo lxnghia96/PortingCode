@@ -20,10 +20,10 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "usb_device.h"
-#include "spi_software.h"
+
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "spi_software.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -88,7 +88,12 @@ int main(void)
   MX_GPIO_Init();
   MX_USB_DEVICE_Init();
   /* USER CODE BEGIN 2 */
-
+  InitializeIO();
+  uint8_t heflashbuffer[3] = {0x01, 0x02, 0x03};
+  uint8_t readData[3] = {0x00, 0x00, 0x00};
+  DAC1220_Write3Bytes(8, heflashbuffer[0], heflashbuffer[1], heflashbuffer[2]);
+  HAL_Delay(25);
+  DAC1220_Read3Bytes(8, &readData[0], &readData[1], &readData[2] );
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -153,52 +158,44 @@ static void MX_GPIO_Init(void)
   GPIO_InitTypeDef GPIO_InitStruct = {0};
 
   /* GPIO Ports Clock Enable */
-  __HAL_RCC_GPIOB_CLK_ENABLE();
-  __HAL_RCC_GPIOC_CLK_ENABLE();
   __HAL_RCC_GPIOA_CLK_ENABLE();
+  __HAL_RCC_GPIOB_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOB, RANGE3_Pin|RANGE2_Pin|RANGE1_Pin|CELL_ON_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOA, CS1_Pin|CS2_Pin|SDIO_DAC_Pin|SCK_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOC, MODE_SW_Pin|CS2_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOB, MODE_SW_Pin|I_E_SWITCH_Pin|RANGE1_Pin|RANGE2_Pin
+                          |RANGE3_Pin|RANGE4_Pin|CELL_ON_Pin, GPIO_PIN_RESET);
 
-  /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOA, CS1_Pin|SCK_Pin, GPIO_PIN_RESET);
-
-  /*Configure GPIO pins : RANGE3_Pin RANGE2_Pin RANGE1_Pin CELL_ON_Pin */
-  GPIO_InitStruct.Pin = RANGE3_Pin|RANGE2_Pin|RANGE1_Pin|CELL_ON_Pin;
+  /*Configure GPIO pins : CS1_Pin CS2_Pin */
+  GPIO_InitStruct.Pin = CS1_Pin|CS2_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
-  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
-
-  /*Configure GPIO pins : MODE_SW_Pin CS2_Pin */
-  GPIO_InitStruct.Pin = MODE_SW_Pin|CS2_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
-  HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
   /*Configure GPIO pins : SDIO2_Pin SDIO1_Pin */
   GPIO_InitStruct.Pin = SDIO2_Pin|SDIO1_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-  GPIO_InitStruct.Pull = GPIO_PULLDOWN;
-  HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
-  /*Configure GPIO pin : CS1_Pin */
-  GPIO_InitStruct.Pin = CS1_Pin;
+  /*Configure GPIO pins : SDIO_DAC_Pin SCK_Pin */
+  GPIO_InitStruct.Pin = SDIO_DAC_Pin|SCK_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
-  HAL_GPIO_Init(CS1_GPIO_Port, &GPIO_InitStruct);
+  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
-  /*Configure GPIO pin : SCK_Pin */
-  GPIO_InitStruct.Pin = SCK_Pin;
+  /*Configure GPIO pins : MODE_SW_Pin I_E_SWITCH_Pin RANGE1_Pin RANGE2_Pin
+                           RANGE3_Pin RANGE4_Pin CELL_ON_Pin */
+  GPIO_InitStruct.Pin = MODE_SW_Pin|I_E_SWITCH_Pin|RANGE1_Pin|RANGE2_Pin
+                          |RANGE3_Pin|RANGE4_Pin|CELL_ON_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(SCK_GPIO_Port, &GPIO_InitStruct);
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
+  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
 }
 
@@ -214,9 +211,9 @@ void InitializeIO()
 	 HAL_GPIO_WritePin(RANGE2_GPIO_Port, RANGE2_Pin, GPIO_PIN_RESET);
 	InitializeSPI();
 	HAL_Delay(25); // power-up delay - necessary for DAC1220
-	DAC1220_Reset();
-	HAL_Delay(25);
-	DAC1220_Init();
+//	DAC1220_Reset();
+//	HAL_Delay(25);
+//	DAC1220_Init();
 	// HEFLASH_readBlock(heflashbuffer, 2, FLASH_ROWSIZE); // get dac calibration
 //	DAC1220_Write3Bytes(8, heflashbuffer[0], heflashbuffer[1], heflashbuffer[2]); // apply dac calibration
 //	DAC1220_Write3Bytes(12, heflashbuffer[3], heflashbuffer[4], heflashbuffer[5]);

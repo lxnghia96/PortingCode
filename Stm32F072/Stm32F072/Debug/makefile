@@ -15,6 +15,7 @@ RM := rm -rf
 -include Drivers/STM32F0xx_HAL_Driver/Src/subdir.mk
 -include Core/Startup/subdir.mk
 -include Core/Src/subdir.mk
+-include Core/Inc/subdir.mk
 -include subdir.mk
 -include objects.mk
 
@@ -58,8 +59,8 @@ all: main-build
 main-build: Stm32F072.elf secondary-outputs
 
 # Tool invocations
-Stm32F072.elf: $(OBJS) $(USER_OBJS) E:\F\Du_an\Project\Porting\ Code\Stm32F072\Stm32F072\STM32F072RBTX_FLASH.ld
-	arm-none-eabi-gcc -o "Stm32F072.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m0 -T"E:\F\Du_an\Project\Porting Code\Stm32F072\Stm32F072\STM32F072RBTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Stm32F072.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Stm32F072.elf: $(OBJS) $(USER_OBJS) E:\F\Du_an\Project\Porting\ Code\Stm32F0\Stm32F072\Stm32F072\STM32F072RBTX_FLASH.ld
+	arm-none-eabi-gcc -o "Stm32F072.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m0 -T"E:\F\Du_an\Project\Porting Code\Stm32F0\Stm32F072\Stm32F072\STM32F072RBTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Stm32F072.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 

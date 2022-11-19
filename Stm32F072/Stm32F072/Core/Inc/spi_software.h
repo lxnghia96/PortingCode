@@ -11,22 +11,6 @@
 #define OUTPUT 0
 #define INPUT 1
 
-#define DATA1_DIR TRISBbits.TRISB4
-#define DATA1_LAT LATBbits.LATB4
-#define DATA1_PIN PORTBbits.RB4
-
-#define DATA2_DIR TRISCbits.TRISC7
-#define DATA2_LAT LATCbits.LATC7
-#define DATA2_PIN PORTCbits.RC7
-
-#define CLOCK_LAT LATBbits.LATB5
-#define CLOCK_DIR TRISBbits.TRISB5
-
-#define CS1_LAT LATBbits.LATB6
-#define CS1_DIR TRISBbits.TRISB6
-
-#define CS2_LAT LATBbits.LATB7
-#define CS2_DIR TRISBbits.TRISB7
 
 void InitializeSPI();
 uint8_t MCP3550_Read(uint8_t* adc_data);

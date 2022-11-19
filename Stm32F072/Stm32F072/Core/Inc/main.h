@@ -58,26 +58,36 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
-#define RANGE3_Pin GPIO_PIN_12
-#define RANGE3_GPIO_Port GPIOB
-#define RANGE2_Pin GPIO_PIN_13
-#define RANGE2_GPIO_Port GPIOB
-#define RANGE1_Pin GPIO_PIN_14
-#define RANGE1_GPIO_Port GPIOB
-#define CELL_ON_Pin GPIO_PIN_15
-#define CELL_ON_GPIO_Port GPIOB
-#define MODE_SW_Pin GPIO_PIN_6
-#define MODE_SW_GPIO_Port GPIOC
-#define SDIO2_Pin GPIO_PIN_7
-#define SDIO2_GPIO_Port GPIOC
-#define SDIO1_Pin GPIO_PIN_8
-#define SDIO1_GPIO_Port GPIOC
-#define CS2_Pin GPIO_PIN_9
-#define CS2_GPIO_Port GPIOC
-#define CS1_Pin GPIO_PIN_8
+#define CS1_Pin GPIO_PIN_0
 #define CS1_GPIO_Port GPIOA
-#define SCK_Pin GPIO_PIN_9
+#define CS2_Pin GPIO_PIN_1
+#define CS2_GPIO_Port GPIOA
+#define SDIO2_Pin GPIO_PIN_3
+#define SDIO2_GPIO_Port GPIOA
+#define SDIO_DAC_Pin GPIO_PIN_4
+#define SDIO_DAC_GPIO_Port GPIOA
+#define SCK_Pin GPIO_PIN_5
 #define SCK_GPIO_Port GPIOA
+#define MODE_SW_Pin GPIO_PIN_0
+#define MODE_SW_GPIO_Port GPIOB
+#define I_E_SWITCH_Pin GPIO_PIN_1
+#define I_E_SWITCH_GPIO_Port GPIOB
+#define RANGE1_Pin GPIO_PIN_2
+#define RANGE1_GPIO_Port GPIOB
+#define RANGE2_Pin GPIO_PIN_10
+#define RANGE2_GPIO_Port GPIOB
+#define RANGE3_Pin GPIO_PIN_11
+#define RANGE3_GPIO_Port GPIOB
+#define RANGE4_Pin GPIO_PIN_12
+#define RANGE4_GPIO_Port GPIOB
+#define CELL_ON_Pin GPIO_PIN_13
+#define CELL_ON_GPIO_Port GPIOB
+#define D_NEG_Pin GPIO_PIN_11
+#define D_NEG_GPIO_Port GPIOA
+#define D_POS_Pin GPIO_PIN_12
+#define D_POS_GPIO_Port GPIOA
+#define SDIO1_Pin GPIO_PIN_13
+#define SDIO1_GPIO_Port GPIOA
 /* USER CODE BEGIN Private defines */
 
 /* USER CODE END Private defines */

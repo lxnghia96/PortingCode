@@ -23,7 +23,7 @@ uint8_t MCP3550_Read(uint8_t* adc_data)
 	// Poll conversion status
 	HAL_GPIO_WritePin(CS2_GPIO_Port, CS2_Pin, GPIO_PIN_RESET);
 	SPIDelay();
-	if(!DATA1_PIN) // conversions are ready
+	if(!HAL_GPIO_ReadPin(SDIO1_GPIO_Port, SDIO1_Pin)) // conversions are ready
 	{
 		Read2BytesSPI(adc_data,adc_data+3);
 		Read2BytesSPI(adc_data+1,adc_data+4);
